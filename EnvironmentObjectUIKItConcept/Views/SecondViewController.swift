@@ -8,18 +8,17 @@
 import UIKit
 
 class SecondViewController: UIViewController, GlobalUpdating {
-    func update() {
-        print("Updating second view controller")
-        title = appSettings.language
-    }
     
-    
-    var appSettings = AppSettings()
+    @Global var appSettings: AppSettings
     
     override func viewDidLoad() {
         super.viewDidLoad()
         registerForUpdates()
         view.backgroundColor = .systemGreen
-
+    }
+    
+    func update() {
+        print("Updating second view controller")
+        title = appSettings.language
     }
 }

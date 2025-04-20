@@ -48,15 +48,27 @@ class Environment{
 protocol GlobalUpdating {
     func update()
     
+    
 }
 extension GlobalUpdating {
     func registerForUpdates() {
-        
+        let mirror = Mirror(reflecting: self)
+        for child in mirror.children {
+            if let result = child.value as? AnyGlobal {
+                NotificationCenter.default.addObserver(forName: Environment.updateChanged, object: result.anyWrappedValue, queue: .main) { _ in
+                    self.update()
+                    
+                }
+            }
+            
+        }
+        update()
     }
 }
 
-struct Global<ObjectType: ObservableObject> {
+@propertyWrapper struct Global<ObjectType: ObservableObject>: AnyGlobal {
     var wrappedValue: ObjectType
+    var anyWrappedValue: Any { wrappedValue }
     
     init() {
         if let value = Environment.shared.values.first(where: { $0 is ObjectType}) as? ObjectType {
@@ -65,4 +77,8 @@ struct Global<ObjectType: ObservableObject> {
             fatalError("Missing type in environment")
         }
     }
+}
+
+protocol AnyGlobal {
+    var anyWrappedValue: Any { get }
 }

@@ -11,7 +11,7 @@ import UIKit
 class FirstViewController: UIViewController, GlobalUpdating {
     
    
-    var userSettings = UserSettings()
+    @Global var userSettings: UserSettings
         
     override func viewDidLoad() {
         super.viewDidLoad()

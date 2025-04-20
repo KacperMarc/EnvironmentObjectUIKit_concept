@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 
 class ThirdViewController: UIViewController, GlobalUpdating {
-    var appSettings = AppSettings()
-    var userSettings = UserSettings()
+    @Global var appSettings: AppSettings
+    @Global var userSettings: UserSettings
     
     override func viewDidLoad() {
         super.viewDidLoad()
