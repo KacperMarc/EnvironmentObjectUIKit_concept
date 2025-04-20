@@ -8,17 +8,24 @@
 import Foundation
 import UIKit
 
-class FirstViewController: UIViewController {
+class FirstViewController: UIViewController, GlobalUpdating {
     
+   
     var userSettings = UserSettings()
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemRed
         view.addSubview(button)
         setupUI()
-
+        registerForUpdates()
     }
+    
+    func update() {
+        print("Updating first view controller")
+        title = userSettings.authenticationString
+    }
+      
     private func setupUI() {
         button.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([

@@ -44,3 +44,25 @@ class Environment{
     }
     
 }
+
+protocol GlobalUpdating {
+    func update()
+    
+}
+extension GlobalUpdating {
+    func registerForUpdates() {
+        
+    }
+}
+
+struct Global<ObjectType: ObservableObject> {
+    var wrappedValue: ObjectType
+    
+    init() {
+        if let value = Environment.shared.values.first(where: { $0 is ObjectType}) as? ObjectType {
+            self.wrappedValue = value
+        }else {
+            fatalError("Missing type in environment")
+        }
+    }
+}

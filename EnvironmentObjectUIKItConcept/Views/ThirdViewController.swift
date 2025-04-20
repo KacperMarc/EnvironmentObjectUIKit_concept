@@ -8,16 +8,23 @@
 import Foundation
 import UIKit
 
-class ThirdViewController: UIViewController {
+class ThirdViewController: UIViewController, GlobalUpdating {
     var appSettings = AppSettings()
     var userSettings = UserSettings()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        registerForUpdates()
         view.backgroundColor = .systemBlue
         view.addSubview(stackView)
         setupUI()
         
+    }
+    func update() {
+        print("Updating third view controller")
+        self.authLabel.text = userSettings.authenticationString
+        self.langLabel.text = appSettings.language
+        title = "Summary"
     }
     private func setupUI() {
         stackView.translatesAutoresizingMaskIntoConstraints = false
